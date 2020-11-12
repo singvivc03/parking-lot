@@ -33,6 +33,11 @@ public class SlotDto {
 
   @Override
   public boolean equals(Object that) {
-    return Objects.equals(this, that);
+    if (that instanceof SlotDto) {
+      if (((SlotDto) that).getId() == this.getId() && ((SlotDto) that).getParkingId().equals(this.getParkingId())) {
+        return true;
+      }
+    }
+    return false;
   }
 }

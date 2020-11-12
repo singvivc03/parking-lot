@@ -1,5 +1,6 @@
 package com.parkinglot.dto;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
@@ -23,5 +24,19 @@ public class SlotDtoTest {
     assertThat(slotDto.getParkingId(), is(parkingId));
     assertThat(slotDto.getParkedVehicle().getRegistrationNumber(), is(regNumber));
     assertThat(slotDto.getParkedVehicle().getColor(), is(color));
+  }
+
+  @Test
+  void shouldEquateMultipleSameSlotInstancesToTrue() {
+    var slot1 = new SlotDto(1, "1", new Vehicle("dummy", "White"));
+    var slot2 = new SlotDto(1, "1", new Vehicle("dummy", "White"));
+    assertThat(slot1.equals(slot2), is(true));
+  }
+
+  @Test
+  void shouldEquateMultipleSameSlotInstancesToFalse() {
+    var slot1 = new SlotDto(1, "2", new Vehicle("dummy", "White"));
+    var slot2 = new SlotDto(1, "1", new Vehicle("dummy1", "White"));
+    assertThat(slot1.equals(slot2), is(false));
   }
 }

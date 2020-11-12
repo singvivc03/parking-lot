@@ -16,9 +16,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
+import static com.parkinglot.dto.Rule.EVEN_DISTRIBUTION;
 import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
@@ -33,17 +34,10 @@ public class ParkingLotDataHolder {
     return parkingLots.add(parkingLot);
   }
 
-  public void determineStrategyByRule(final Rule rule) {
-    switch (rule) {
-      case EVEN_DISTRIBUTION:
-        parkingStrategy = new EvenDistributionParkingStrategy();
-        break;
-      case FILL_FIRST:
-        parkingStrategy = new FillFirstParkingStrategy();
-        break;
-      default:
-        throw new IllegalArgumentException("Invalid rule");
-    }
+  public ParkingStrategy determineStrategyByRule(final Rule rule) {
+    parkingStrategy = Optional.of(rule).filter(it -> it == EVEN_DISTRIBUTION)
+      .map(it -> (ParkingStrategy) new EvenDistributionParkingStrategy()).orElse(new FillFirstParkingStrategy());
+    return parkingStrategy;
   }
 
   public SlotDto parkVehicle(final Vehicle vehicle) {
