@@ -37,7 +37,7 @@ public class FillFirstParkingStrategyTest {
   void shouldReturnEmptyOptionalParkingLot() {
     ParkingLotDataHolder parkingLotDataHolder = new ParkingLotDataHolder();
     parkingLotDataHolder.createParkingLot(1);
-    parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(new FillFirstParkingStrategy());
     var command = new ParkingCommand(parkingLotDataHolder);
     command.execute("dummy white");
     var optionalParkingLot = parkingStrategy.determineParkingLot(parkingLotDataHolder.getParkingLots());

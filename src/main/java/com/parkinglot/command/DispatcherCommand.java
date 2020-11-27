@@ -14,7 +14,8 @@ public class DispatcherCommand extends AbstractCommand {
   public Response execute(final String inputCommand) {
     validateAndThrowIfInvalidRequest(inputCommand, 1);
     var rule = Rule.getRuleByValue(inputCommand);
-    parkingLotDao.determineStrategyByRule(rule);
+    var parkingStrategy = parkingLotDao.determineStrategyByRule(rule);
+    parkingLotDao.initializeParkingStrategy(parkingStrategy);
     return new Response("Dispatcher is now using the " + rule.getDescription() + " rule");
   }
 }

@@ -35,9 +35,13 @@ public class ParkingLotDataHolder {
   }
 
   public ParkingStrategy determineStrategyByRule(final Rule rule) {
-    parkingStrategy = Optional.of(rule).filter(it -> it == EVEN_DISTRIBUTION)
+    var parkingStrategy = Optional.of(rule).filter(it -> it == EVEN_DISTRIBUTION)
       .map(it -> (ParkingStrategy) new EvenDistributionParkingStrategy()).orElse(new FillFirstParkingStrategy());
     return parkingStrategy;
+  }
+
+  public void initializeParkingStrategy(final ParkingStrategy parkingStrategy) {
+    this.parkingStrategy = parkingStrategy;
   }
 
   public SlotDto parkVehicle(final Vehicle vehicle) {

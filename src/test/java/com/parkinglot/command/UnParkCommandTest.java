@@ -1,9 +1,9 @@
 package com.parkinglot.command;
 
 import com.parkinglot.data.ParkingLotDataHolder;
-import com.parkinglot.dto.Rule;
 import com.parkinglot.dto.Vehicle;
 import com.parkinglot.exceptions.InvalidSlotSelectionException;
+import com.parkinglot.strategy.FillFirstParkingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,7 +22,7 @@ public class UnParkCommandTest {
   void beforeEach() {
     ParkingLotDataHolder parkingLotDataHolder = new ParkingLotDataHolder();
     parkingLotDataHolder.createParkingLot(1);
-    parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(new FillFirstParkingStrategy());
     parkingLotDataHolder.parkVehicle(new Vehicle("dummy", "White"));
     this.unParkCommand = new UnParkCommand(parkingLotDataHolder);
   }

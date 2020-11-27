@@ -1,8 +1,8 @@
 package com.parkinglot.command;
 
 import com.parkinglot.data.ParkingLotDataHolder;
-import com.parkinglot.dto.Rule;
 import com.parkinglot.dto.Vehicle;
+import com.parkinglot.strategy.FillFirstParkingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +17,7 @@ public class FindRegistrationNumberByColorCommandTest {
   void beforeEach() {
     ParkingLotDataHolder parkingLotDataHolder = new ParkingLotDataHolder();
     parkingLotDataHolder.createParkingLot(2);
-    parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(new FillFirstParkingStrategy());
     parkingLotDataHolder.parkVehicle(new Vehicle("dummy", "White"));
     parkingLotDataHolder.parkVehicle(new Vehicle("dummy2", "White"));
     findRegistrationNumberByColorCommand = new FindRegistrationNumberByColorCommand(parkingLotDataHolder);

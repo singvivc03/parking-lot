@@ -50,6 +50,7 @@ public class ParkingLotDataHolderTest {
   void shouldReturnFillFirstParkingStrategyForFillFirstRule() {
     var parkingLotDataHolder = createDummyParkingLot();
     var parkingStrategy = parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(parkingStrategy);
     assertThat(parkingStrategy, instanceOf(FillFirstParkingStrategy.class));
   }
 
@@ -63,7 +64,8 @@ public class ParkingLotDataHolderTest {
   private ParkingLotDataHolder createDummyParkingLot() {
     var parkingLotDataHolder = new ParkingLotDataHolder();
     var ok = parkingLotDataHolder.createParkingLot(1);
-    parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    var parkingStrategy = parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(parkingStrategy);
     assertThat(ok, is(true));
     return parkingLotDataHolder;
   }

@@ -1,17 +1,14 @@
 package com.parkinglot.command;
 
 import com.parkinglot.data.ParkingLotDataHolder;
-import com.parkinglot.dto.Rule;
-import com.parkinglot.exceptions.UnavailableParkingException;
+import com.parkinglot.strategy.FillFirstParkingStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.is;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class ParkingCommandTest {
 
@@ -21,7 +18,7 @@ public class ParkingCommandTest {
   void beforeEach() {
     ParkingLotDataHolder parkingLotDataHolder = new ParkingLotDataHolder();
     parkingLotDataHolder.createParkingLot(1);
-    parkingLotDataHolder.determineStrategyByRule(Rule.FILL_FIRST);
+    parkingLotDataHolder.initializeParkingStrategy(new FillFirstParkingStrategy());
     parkingCommand = new ParkingCommand(parkingLotDataHolder);
   }
 
