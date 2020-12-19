@@ -3,7 +3,7 @@ package com.parkinglot.command;
 import com.parkinglot.data.ParkingLotDataHolder;
 import com.parkinglot.dto.Response;
 
-import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.joining;
 
 public class FindRegistrationNumberByColorCommand extends AbstractCommand {
 
@@ -17,10 +17,7 @@ public class FindRegistrationNumberByColorCommand extends AbstractCommand {
     var allBookedSlots = parkingLotDao.getAllBookedSlot();
     var registrationNumber = allBookedSlots.parallelStream()
             .filter(it -> inputCommand.trim().equalsIgnoreCase(it.getParkedVehicle().getColor()))
-            .map(it -> it.getParkedVehicle().getRegistrationNumber()).collect(toList());
-    StringBuilder registrationNumberBuilder = new StringBuilder();
-    registrationNumber.forEach(reg -> registrationNumberBuilder.append(reg + ","));
-    var regs = registrationNumberBuilder.substring(0, registrationNumberBuilder.lastIndexOf(","));
-    return new Response(regs);
+            .map(it -> it.getParkedVehicle().getRegistrationNumber()).collect(joining(","));
+    return new Response(registrationNumber);
   }
 }
